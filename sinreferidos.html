@@ -54,7 +54,7 @@ body{
   line-height:1.6;
   overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
-  padding-top:44px; /* espacio para la barra fija del contador */
+  padding-top:0;
 }
 /* Fondo diagonal + glows */
 body::before{
@@ -266,24 +266,13 @@ footer a{color:var(--lavender);text-decoration:none}
   .ba{grid-template-columns:1fr}
   .btn--xl{font-size:1.12rem;padding:20px 26px}
   .sticky-cta{display:block}
-  .countbar{font-size:.82rem;gap:10px}
-  body{padding-top:66px}
+  body{padding-top:0}
   .hero{padding-top:10px}
   .offer{padding:30px 22px}
 }
 </style>
 </head>
 <body>
-
-<!-- ============ SECCIÓN 0 — BARRA + CONTADOR ============ -->
-<div class="countbar">
-  <span class="lbl">⚡ <b>Precio de lanzamiento</b> — el acceso a este valor cierra en:</span>
-  <span class="timer" id="timer" aria-label="Cuenta regresiva">
-    <span class="u" data-h>00</span><span class="sep">:</span>
-    <span class="u" data-m>00</span><span class="sep">:</span>
-    <span class="u" data-s>00</span>
-  </span>
-</div>
 
 <!-- ============ HEADER / LOGO ============ -->
 <header class="site-header">
@@ -334,7 +323,7 @@ footer a{color:var(--lavender);text-decoration:none}
   </div>
 </section>
 
-<!-- 👇 DESDE AQUÍ SE REVELA 180s DESPUÉS DE ENTRAR (ver CONFIG.revealAfterSeconds) -->
+<!-- 👇 DESDE AQUÍ SE REVELA 360s DESPUÉS DE ENTRAR (ver CONFIG.revealAfterSeconds) -->
 <div id="gated" class="gate-hidden">
 
 <!-- ============ SECCIÓN 2 — EL PROBLEMA ============ -->
@@ -528,7 +517,7 @@ footer a{color:var(--lavender);text-decoration:none}
 const CONFIG = {
   checkoutUrl: "https://pay.hotmart.com/F106873924R?checkoutMode=10",   // 👉 tu link de pago (Hotmart). Aplica a TODOS los botones.
   countdownHours: 24,                 // horas del contador (se reinicia solo, anclado al reloj real)
-  revealAfterSeconds: 180             // segundos para revelar el contenido de abajo (0 = mostrar de una)
+  revealAfterSeconds: 360             // segundos para revelar el contenido de abajo (0 = mostrar de una)
 };
 /* ========================================================== */
 
