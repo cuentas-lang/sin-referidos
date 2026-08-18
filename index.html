@@ -131,8 +131,8 @@ section{padding:76px 0;position:relative}
   position:relative;border-radius:20px;padding:3px;background:var(--grad);
   box-shadow:0 30px 80px -30px rgba(120,72,208,.8),0 0 0 1px rgba(0,0,0,.4);
 }
-#vsl-video{position:relative;width:100%;aspect-ratio:16/9;border-radius:17px;overflow:hidden;background:#07021a}
-#vsl-video iframe,#vsl-video video,#vsl-video>div{position:absolute;inset:0;width:100%!important;height:100%!important;border:0}
+#vsl-video{position:relative;width:100%;border-radius:17px;overflow:hidden;background:#000;line-height:0}
+#vsl-video vturb-smartplayer{display:block;width:100%}
 .video-placeholder{
   position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
   color:var(--text-muted);text-align:center;padding:20px;
@@ -232,7 +232,8 @@ section{padding:76px 0;position:relative}
 .site-header{padding:20px 0 8px;display:flex;justify-content:center}
 .logo{display:flex;align-items:center;gap:14px}
 .logo svg{width:56px;height:56px}
-.logo img{height:58px;width:auto;display:block}
+.logo img{height:clamp(46px,9vw,62px);width:auto;display:block}
+.logo-fallback{align-items:center;gap:14px}
 .logo .word{font-family:'Coolvetica';font-size:1.75rem;letter-spacing:.04em}
 .logo .word .plus{color:var(--lavender)}
 
@@ -287,19 +288,22 @@ footer a{color:var(--lavender);text-decoration:none}
 <!-- ============ HEADER / LOGO ============ -->
 <header class="site-header">
   <div class="container logo" style="justify-content:center">
-    <!-- Reemplaza este SVG por tu logo oficial si quieres -->
-    <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
-      <defs>
-        <linearGradient id="lg" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
-          <stop stop-color="#4820A0"/><stop offset=".55" stop-color="#6840C0"/><stop offset="1" stop-color="#9870E8"/>
-        </linearGradient>
-      </defs>
-      <path d="M50 20a22 22 0 1 0 4 18" stroke="url(#lg)" stroke-width="6" stroke-linecap="round"/>
-      <circle cx="32" cy="27" r="7" fill="url(#lg)"/>
-      <path d="M20 46c0-7 6-11 12-11s12 4 12 11" fill="url(#lg)"/>
-      <path d="M50 8v12M44 14h12" stroke="#9870E8" stroke-width="4" stroke-linecap="round"/>
-    </svg>
-    <span class="word">SIN REFERIDOS<span class="plus"></span></span>
+    <!-- Logo oficial: sube tu archivo al repo como "logo.png" (junto al index.html). Si no está, se muestra el respaldo. -->
+    <img src="logo.png" alt="Sin Referidos" class="logo-img" onerror="this.style.display='none';var f=document.getElementById('logoFallback');if(f)f.style.display='flex';">
+    <span id="logoFallback" class="logo-fallback" style="display:none;align-items:center;gap:14px">
+      <svg viewBox="0 0 64 64" fill="none" aria-hidden="true" style="width:56px;height:56px">
+        <defs>
+          <linearGradient id="lg" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#4820A0"/><stop offset=".55" stop-color="#6840C0"/><stop offset="1" stop-color="#9870E8"/>
+          </linearGradient>
+        </defs>
+        <path d="M50 20a22 22 0 1 0 4 18" stroke="url(#lg)" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="32" cy="27" r="7" fill="url(#lg)"/>
+        <path d="M20 46c0-7 6-11 12-11s12 4 12 11" fill="url(#lg)"/>
+        <path d="M50 8v12M44 14h12" stroke="#9870E8" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+      <span class="word">SIN REFERIDOS</span>
+    </span>
   </div>
 </header>
 
@@ -317,20 +321,16 @@ footer a{color:var(--lavender);text-decoration:none}
 
     <div class="video-shell reveal">
       <div class="video-frame">
-        <!-- 👉 PEGA AQUÍ EL EMBED DE VTURB (borra el bloque .video-placeholder de abajo) -->
+        <!-- VSL — VTurb -->
         <div id="vsl-video">
-          <div class="video-placeholder">
-            <div class="pbtn"><svg viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></div>
-            <div>Aquí va tu VSL — pega el <code>embed de VTurb</code> en <code>#vsl-video</code></div>
-          </div>
+          <vturb-smartplayer id="vid-6a84aa6f8d52d90d2f1a8ab9" style="display: block; margin: 0 auto; width: 100%;"><div class="vturb-player-placeholder" style="position: relative; width: 100%; padding: 56.25% 0 0; z-index: 0; background-color: black;"></div></vturb-smartplayer>
+          <script type="text/javascript">
+            var s=document.createElement("script"); s.src="https://scripts.converteai.net/381926d7-76d3-4b2a-8480-7bb74a18d64b/players/6a84aa6f8d52d90d2f1a8ab9/v4/player.js", s.async=!0,document.head.appendChild(s);
+          </script>
         </div>
       </div>
     </div>
 
-    <div class="btn-wrap reveal">
-      <a class="btn btn--xl js-cta" href="#">Quiero mi sistema Sin Referidos →</a>
-      <p class="cta-micro">Acceso inmediato · Pago único de <b>$39</b> · Garantía de <b>7</b> días (100%) · Desde tu compu o celular</p>
-    </div>
   </div>
 </section>
 
