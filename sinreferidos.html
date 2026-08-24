@@ -142,8 +142,8 @@ section{padding:76px 0;position:relative}
 /* Video */
 .video-shell{max-width:820px;margin:0 auto 34px}
 .video-frame{
-  position:relative;border-radius:20px;padding:3px;background:var(--grad);
-  box-shadow:0 30px 80px -30px rgba(120,72,208,.8),0 0 0 1px rgba(0,0,0,.4);
+  position:relative;border-radius:18px;padding:0;background:transparent;
+  box-shadow:0 24px 70px -34px rgba(120,72,208,.45);
 }
 #vsl-video{position:relative;width:100%;border-radius:17px;overflow:hidden;background:#000;line-height:0}
 #vsl-video vturb-smartplayer{display:block;width:100%}
@@ -337,7 +337,7 @@ footer a{color:var(--lavender);text-decoration:none}
   </div>
 </section>
 
-<!-- 👇 DESDE AQUÍ SE REVELA 360s DESPUÉS DE ENTRAR (ver CONFIG.revealAfterSeconds) -->
+<!-- 👇 DESDE AQUÍ SE REVELA 90s DESPUÉS DE ENTRAR (ver CONFIG.revealAfterSeconds) -->
 <div id="gated" class="gate-hidden">
 
 <!-- ============ SECCIÓN 2 — EL PROBLEMA ============ -->
@@ -531,7 +531,7 @@ footer a{color:var(--lavender);text-decoration:none}
 const CONFIG = {
   checkoutUrl: "https://pay.hotmart.com/F106873924R?checkoutMode=10",   // 👉 tu link de pago (Hotmart). Aplica a TODOS los botones.
   countdownHours: 24,                 // horas del contador (se reinicia solo, anclado al reloj real)
-  revealAfterSeconds: 360             // segundos para revelar el contenido de abajo (0 = mostrar de una)
+  revealAfterSeconds: 90              // segundos para revelar el contenido de abajo (0 = mostrar de una)
 };
 /* ========================================================== */
 
