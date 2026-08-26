@@ -31,7 +31,7 @@
 
   /* ---------- header / logo ---------- */
   header{padding:40px 0 8px;display:flex;justify-content:center}
-  .brand{height:74px;width:auto;display:block}
+  .brand{height:120px;width:auto;display:block}
 
   /* ---------- hero ---------- */
   .hero{text-align:center;padding:30px 0 8px}
@@ -79,6 +79,19 @@
   .hc li{display:flex;gap:11px;align-items:flex-start;font-size:14.5px;color:#e6e0fb;line-height:1.4}
   .mk{flex:none;margin-top:2px;width:16px;height:16px}
   .hc.a .mk path{fill:var(--lav2)} .hc.d .mk path{fill:var(--teal)}
+
+  /* ---------- ad budget note ---------- */
+  .adnote{margin:30px 0 0;border:1px solid var(--line2);border-radius:20px;padding:24px 28px;
+    background:linear-gradient(180deg,rgba(34,211,197,.08),rgba(124,58,237,.05));
+    display:flex;gap:26px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+  .adnote-main{flex:1;min-width:300px}
+  .adnote .kick{font-family:'Poppins';font-weight:600;font-size:12px;letter-spacing:2px;color:var(--teal);text-transform:uppercase}
+  .adnote h3{font-family:'Poppins';font-weight:700;font-size:20px;margin:6px 0 8px;color:#fff}
+  .adnote p{color:var(--muted);font-size:14.5px;max-width:640px;line-height:1.55}
+  .adnote p b{color:#fff}
+  .adnote-pills{display:flex;gap:10px;flex-wrap:wrap}
+  .adnote-pills span{font-family:'Poppins';font-weight:700;font-size:15px;color:var(--lav);
+    border:1px solid var(--line2);border-radius:12px;padding:10px 15px;background:rgba(139,92,246,.10)}
 
   /* ---------- table ---------- */
   .tbl-head{text-align:center;margin:56px 0 8px}
@@ -172,6 +185,17 @@
       <div class="desc">Dominación total del mercado. Todo ejecutado por el equipo, de punta a punta.</div>
       <div class="cnt"><b>66</b> servicios incluidos</div>
     </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="adnote">
+    <div class="adnote-main">
+      <div class="kick">Presupuesto de publicidad · aparte</div>
+      <h3>El precio es solo del servicio. La pauta la defines tú.</h3>
+      <p>El monto de cada plan es el <b>costo del servicio</b> — no incluye la inversión en publicidad. Recomendamos invertir <b>desde $200 al mes</b>. Puedes poner lo que decidas durante los 3 meses y <b>el costo del servicio no cambia</b>.</p>
+    </div>
+    <div class="adnote-pills"><span>$200</span><span>$300</span><span>$500</span><span>$1.000</span></div>
   </div>
 </section>
 
