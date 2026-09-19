@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Active Marketing Médico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme: dark;
+    --bg:#08021C;
+    --ink:#F4F1FF; --ink-soft:#B7ACD6; --ink-mute:#7C709E;
+    --violet:#9870E8; --violet-deep:#4820A0;
+    --line:rgba(255,255,255,0.09);
+    --field:rgba(255,255,255,0.03); --field-line:rgba(152,112,232,0.24);
+    --err:#FF8FA3;
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 24px)}
+  html,body{margin:0}
+  body{
+    font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    color:var(--ink); background:var(--bg);
+    background-image:radial-gradient(80% 55% at 50% -12%, rgba(72,32,160,0.42) 0%, rgba(72,32,160,0) 60%);
+    -webkit-font-smoothing:antialiased; line-height:1.6; min-height:100%;
+  }
+  .wrap{max-width:600px;margin:0 auto;padding:0 24px}
+
+  /* Logo */
+  .logo{padding:clamp(28px,6vw,46px) 0 clamp(10px,2vw,16px);display:flex;justify-content:center}
+  .logo-img{max-height:clamp(56px,13vw,76px);width:auto;display:block}
+  .logo .ph{display:none;align-items:center;padding:15px 22px;border:1px dashed var(--field-line);
+    border-radius:12px;color:var(--ink-mute);font-size:.85rem}
+  .logo .ph b{color:var(--ink-soft);font-weight:600}
+
+  /* Hero */
+  .eyebrow{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--violet);font-weight:500;text-align:center}
+  h1{font-family:'Poppins';font-weight:800;font-size:clamp(1.9rem,6vw,2.7rem);line-height:1.1;
+    letter-spacing:-.02em;text-align:center;margin:16px 0 0;text-wrap:balance}
+  h1 .hl{color:var(--violet)}
+  .phone{display:grid;grid-template-columns:134px 1fr;gap:10px}
+  .lede{color:var(--ink-soft);font-size:1.08rem;text-align:center;margin:20px auto 0;max-width:46ch}
+  .lede b{color:#fff;font-weight:500}
+
+  /* Form */
+  .card{margin-top:clamp(34px,6vw,46px);border:1px solid var(--line);border-radius:18px;
+    background:rgba(255,255,255,0.02);padding:clamp(22px,5vw,30px);scroll-margin-top:24px}
+  .card-head h2{font-family:'Poppins';font-weight:700;font-size:1.28rem;margin:0;letter-spacing:-.01em}
+  .card-head p{margin:8px 0 20px;color:var(--ink-soft);font-size:.92rem}
+  form{display:flex;flex-direction:column;gap:13px}
+  .field label{display:block;font-size:.82rem;color:var(--ink-soft);margin-bottom:6px}
+  .field label .opt{color:var(--ink-mute)}
+  .field input,.field select,.field textarea{width:100%;font-family:inherit;font-size:.96rem;color:var(--ink);
+    background:var(--field);border:1px solid var(--field-line);border-radius:11px;
+    padding:12px 14px;outline:none;transition:border-color .15s, box-shadow .15s}
+  .field textarea{resize:vertical;min-height:66px}
+  .field select{appearance:none;cursor:pointer;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239870E8' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 14px center;padding-right:38px}
+  .field input::placeholder,.field textarea::placeholder{color:var(--ink-mute)}
+  .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--violet);box-shadow:0 0 0 3px rgba(152,112,232,0.16)}
+  .field.invalid input,.field.invalid select{border-color:var(--err)}
+  .field .msg{font-size:.77rem;color:var(--err);margin-top:5px;display:none}
+  .field.invalid .msg{display:block}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+  .cta{margin-top:5px;width:100%;border:none;cursor:pointer;
+    font-family:'Poppins';font-weight:700;font-size:1.02rem;color:#fff;padding:15px 20px;border-radius:12px;
+    background:linear-gradient(135deg,var(--violet) 0%, var(--violet-deep) 100%);transition:opacity .15s, transform .12s}
+  .cta:hover{transform:translateY(-1px)}
+  .cta:disabled{opacity:.7;cursor:default;transform:none}
+  .fineprint{margin:12px 0 0;font-size:.76rem;color:var(--ink-mute);text-align:center}
+
+  .success{display:none;text-align:center;padding:6px 2px;animation:rise .5s cubic-bezier(.2,.8,.2,1)}
+  .success.on{display:block}
+  form.off,.card-head.off{display:none}
+  .success .ring{width:60px;height:60px;margin:0 auto 16px;border-radius:50%;display:grid;place-items:center;
+    background:rgba(152,112,232,0.12);border:1px solid var(--field-line)}
+  .success .ring svg{width:28px;height:28px}
+  .success h2{font-family:'Poppins';font-weight:700;font-size:1.3rem;margin:0 0 8px}
+  .success p{color:var(--ink-soft);font-size:.95rem;margin:0 auto;max-width:36ch}
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+  /* Pain */
+  .pain{margin-top:clamp(52px,9vw,78px)}
+  .pain h3{font-family:'Poppins';font-weight:700;font-size:1.35rem;letter-spacing:-.01em;margin:0 0 22px;line-height:1.25}
+  .pain ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0}
+  .pain li{padding:16px 0;border-top:1px solid var(--line);color:var(--ink);font-size:1.02rem}
+  .pain li:last-child{border-bottom:1px solid var(--line)}
+  .pain .turn{margin:26px 0 0;color:var(--ink-soft);font-size:1.02rem}
+  .pain .turn b{color:#fff;font-weight:500}
+
+  /* Proof + close */
+  .proof{margin-top:clamp(40px,7vw,58px);padding-top:clamp(30px,5vw,40px);border-top:1px solid var(--line);text-align:center}
+  .proof .nums{font-family:'Poppins';font-weight:800;font-size:clamp(1.5rem,4vw,2rem);letter-spacing:-.02em}
+  .proof .nums span{color:var(--violet)}
+  .proof .cap{color:var(--ink-soft);font-size:.95rem;margin:12px auto 0;max-width:40ch}
+  .close-cta{margin-top:34px;text-align:center}
+  .link-cta{display:inline-block;cursor:pointer;border:none;text-decoration:none;
+    font-family:'Poppins';font-weight:700;font-size:1rem;color:#fff;padding:14px 28px;border-radius:12px;
+    background:linear-gradient(135deg,var(--violet) 0%, var(--violet-deep) 100%);transition:transform .12s}
+  .link-cta:hover{transform:translateY(-1px)}
+  .tagline{margin-top:30px;text-align:center;font-family:'Poppins';font-weight:700;font-style:italic;color:#fff;opacity:.9;font-size:1.02rem}
+
+  footer{margin-top:clamp(48px,8vw,70px);border-top:1px solid var(--line);
+    padding:30px 0 44px;text-align:center;color:var(--ink-mute);font-size:.82rem}
+  footer .foot-logo{max-height:40px;width:auto;margin-bottom:14px}
+
+  @media (max-width:520px){ .two{grid-template-columns:1fr} }
+  @media (prefers-reduced-motion:reduce){ *{animation:none!important;transition:none!important} }
+</style>
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- Logo (tu imagen original, sin modificar) -->
+    <div class="logo">
+      <img class="logo-img" src="active-logo.png" alt="Active Marketing Médico"
+           onerror="this.style.display='none';document.getElementById('logoPh').style.display='inline-flex'">
+      <span class="ph" id="logoPh">Sube tu logo como <b>active-logo.png</b></span>
+    </div>
+
+    <!-- Hero -->
+    <p class="eyebrow">Marketing para médicos especialistas</p>
+    <h1>La guía para atraer más pacientes en <span class="hl">3 simples pasos</span> que usamos en Active.</h1>
+    <p class="lede">El mismo sistema con el que ayudamos a médicos especialistas a dejar de depender de referidos y llenar su agenda. <b>Déjanos tus datos y te la enviamos gratis.</b></p>
+
+    <!-- Capture -->
+    <div class="card" id="optin">
+      <div class="card-head" id="cardHead">
+        <h2>Recibe la guía gratis</h2>
+        <p>Déjanos tus datos y te la enviamos a tu correo.</p>
+      </div>
+
+      <form id="leadForm" novalidate>
+        <div class="field" id="f-nombre">
+          <label for="nombre">Nombre completo</label>
+          <input id="nombre" name="nombre" type="text" autocomplete="name" placeholder="Dra. / Dr. ...">
+          <div class="msg">Escribe tu nombre.</div>
+        </div>
+
+        <div class="field" id="f-especialidad">
+          <label for="especialidad">Especialidad <span class="opt">(opcional)</span></label>
+          <input id="especialidad" name="especialidad" type="text" placeholder="Ej: odontología, cirugía, estética...">
+        </div>
+
+        <div class="field" id="f-ciudad">
+          <label for="ciudad">Ciudad</label>
+          <input id="ciudad" name="ciudad" type="text" autocomplete="address-level2" placeholder="Ciudad">
+          <div class="msg">Falta tu ciudad.</div>
+        </div>
+
+        <div class="field" id="f-whatsapp">
+          <label for="whatsapp">WhatsApp</label>
+          <div class="phone">
+            <select id="codigo" name="codigo" aria-label="Código de país">
+              <option value="+591" selected>+591 · Bolivia</option>
+              <option value="+54">+54 · Argentina</option>
+              <option value="+56">+56 · Chile</option>
+              <option value="+57">+57 · Colombia</option>
+              <option value="+506">+506 · Costa Rica</option>
+              <option value="+593">+593 · Ecuador</option>
+              <option value="+503">+503 · El Salvador</option>
+              <option value="+502">+502 · Guatemala</option>
+              <option value="+504">+504 · Honduras</option>
+              <option value="+52">+52 · México</option>
+              <option value="+505">+505 · Nicaragua</option>
+              <option value="+507">+507 · Panamá</option>
+              <option value="+595">+595 · Paraguay</option>
+              <option value="+51">+51 · Perú</option>
+              <option value="+1">+1 · Rep. Dom. / USA</option>
+              <option value="+598">+598 · Uruguay</option>
+              <option value="+58">+58 · Venezuela</option>
+              <option value="+34">+34 · España</option>
+            </select>
+            <input id="whatsapp" name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" placeholder="Tu número">
+          </div>
+          <div class="msg">Número inválido.</div>
+        </div>
+
+        <div class="field" id="f-correo">
+          <label for="correo">Correo electrónico</label>
+          <input id="correo" name="correo" type="email" autocomplete="email" placeholder="tucorreo@ejemplo.com">
+          <div class="msg">Revisa tu correo.</div>
+        </div>
+
+        <div class="field" id="f-reto">
+          <label for="reto">¿Qué es lo que más te frena hoy?</label>
+          <select id="reto" name="reto">
+            <option value="" disabled selected>Elige lo que más te describe...</option>
+            <option data-offer="Team Active — comunidad ($20/mes)">Estoy empezando y quiero aprender marketing médico junto a otros doctores.</option>
+            <option data-offer="Curso Sin Referidos ($39)">Dependo de los referidos y quiero un método claro para dejar de depender de ellos.</option>
+            <option data-offer="Check Up de Marketing Médico ($79)">Ya hago marketing pero no me llegan pacientes y no sé qué estoy haciendo mal.</option>
+            <option data-offer="Método Active Online ($500–$1000)">Quiero implementar yo mismo todo el sistema para atraer pacientes, paso a paso.</option>
+            <option data-offer="Servicio Active — mensual ($2000+/mes)">No tengo tiempo; quiero que un equipo experto lleve todo mi marketing por mí.</option>
+            <option data-offer="Servicio Active — 6 meses">Quiero escalar mi consulta con acompañamiento experto durante varios meses.</option>
+            <option data-offer="Servicio Active — 1 año">Quiero ser el referente de mi especialidad y dominar mi mercado a largo plazo.</option>
+          </select>
+          <div class="msg">Elige una opción.</div>
+        </div>
+
+        <button type="submit" class="cta" id="submitBtn">Quiero mi guía gratis</button>
+        <p class="fineprint">Sin spam. Solo la guía y contenido útil de Active.</p>
+      </form>
+
+      <div class="success" id="success" aria-live="polite">
+        <div class="ring"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#9870E8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h2 id="successTitle">Bienvenido a Active.</h2>
+        <p>Te enviaremos la guía a tu correo en los próximos minutos. Revisa tu bandeja de entrada.</p>
+      </div>
+    </div>
+
+    <!-- Pain -->
+    <section class="pain">
+      <h3>Sabemos exactamente lo que te frena:</h3>
+      <ul>
+        <li>Depender de que otros te recomienden para llenar tu consulta.</li>
+        <li>Pacientes que regatean, no valoran tu trabajo y te agotan.</li>
+        <li>No tener forma de atraer pacientes cuando tú lo decides.</li>
+      </ul>
+      <p class="turn">En Active lo resolvemos: definimos a tu <b>paciente ideal</b>, creamos tu <b>oferta irresistible</b> y filtramos a los curiosos antes de que lleguen a tu agenda.</p>
+    </section>
+
+    <!-- Proof -->
+    <section class="proof">
+      <div class="nums"><span>10M</span> de alcance · <span>30.000</span> seguidores · <span>1 mes</span> de anticipación para agendar</div>
+      <p class="cap">Esa puede ser tu historia dentro de 6 meses.</p>
+      <div class="close-cta">
+        <button class="link-cta" type="button" id="scrollCta">Quiero recibir mi guía gratis</button>
+      </div>
+      <p class="tagline">“Deja de ser el mejor secreto de tu ciudad.”</p>
+    </section>
+
+    <footer>
+      <img class="foot-logo" src="active-logo.png" alt="Active Marketing Médico" onerror="this.style.display='none'">
+      <div>Marketing para médicos especialistas en Latinoamérica.</div>
+    </footer>
+
+  </div>
+
+<script>
+  /* ============================================================
+     CONFIG — lo único que tocas para producción
+     ============================================================ */
+  const CONFIG = {
+    leadEndpoint: "",   // URL de tu Google Sheet / webhook (recibe POST text/plain con el lead)
+    metaPixelId: ""     // Tu Meta Pixel ID (dispara "Lead" al enviar). Vacío = no dispara.
+  };
+
+  function initPixel(){
+    if(!CONFIG.metaPixelId || window.fbq) return;
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init',CONFIG.metaPixelId);fbq('track','PageView');
+  }
+  initPixel();
+
+  document.getElementById('scrollCta').addEventListener('click',()=>{
+    document.getElementById('optin').scrollIntoView({behavior:'smooth',block:'start'});
+    setTimeout(()=>document.getElementById('nombre').focus(),500);
+  });
+
+  const form = document.getElementById('leadForm');
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  function setInvalid(id,bad){ document.getElementById(id).classList.toggle('invalid',bad); }
+  function validate(){
+    const v = id => document.getElementById(id).value.trim();
+    let ok = true;
+    const checks = {
+      'f-nombre': v('nombre').length >= 2,
+      'f-ciudad': v('ciudad').length >= 2,
+      'f-whatsapp': v('whatsapp').replace(/[^0-9]/g,'').length >= 6,
+      'f-correo': emailRe.test(v('correo')),
+      'f-reto': !!v('reto')
+    };
+    for(const id in checks){ setInvalid(id, !checks[id]); if(!checks[id]) ok=false; }
+    return ok;
+  }
+
+  const btn = document.getElementById('submitBtn');
+  form.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    if(!validate()){ const bad=form.querySelector('.invalid input,.invalid select'); if(bad) bad.focus(); return; }
+    btn.disabled = true; btn.textContent = 'Enviando...';
+    const val = id => (document.getElementById(id).value||'').trim();
+    const retoEl = document.getElementById('reto');
+    const producto = retoEl.selectedOptions[0]?.getAttribute('data-offer') || '';
+    const lead = {
+      nombre: val('nombre'), especialidad: val('especialidad'), ciudad: val('ciudad'),
+      whatsapp: (val('codigo') + ' ' + val('whatsapp')).trim(),
+      correo: val('correo'), reto: val('reto'), producto_recomendado: producto,
+      fecha: new Date().toISOString(), origen: location.href
+    };
+    if(window.fbq){ fbq('track','Lead',{content_name:'Guia Active Marketing Medico'}); }
+    if(CONFIG.leadEndpoint){
+      try{
+        await fetch(CONFIG.leadEndpoint,{
+          method:'POST', mode:'no-cors',
+          headers:{'Content-Type':'text/plain;charset=utf-8'},
+          body: JSON.stringify(lead)
+        });
+      }catch(err){ /* no bloqueamos la confirmación */ }
+    }
+    showSuccess(lead.nombre);
+  });
+
+  function firstName(full){ return (full||'').split(' ')[0] || ''; }
+  function showSuccess(nombre){
+    document.getElementById('cardHead').classList.add('off');
+    form.classList.add('off');
+    const fn = firstName(nombre);
+    document.getElementById('successTitle').textContent = fn ? `Bienvenido a Active, ${fn}.` : 'Bienvenido a Active.';
+    document.getElementById('success').classList.add('on');
+    document.getElementById('optin').scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+</script>
+</body>
+</html>
